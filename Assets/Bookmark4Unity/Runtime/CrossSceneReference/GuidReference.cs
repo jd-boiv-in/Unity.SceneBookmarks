@@ -1,4 +1,5 @@
-﻿namespace Bookmark4Unity.Guid
+﻿#if UNITY_EDITOR
+namespace Bookmark4Unity.Guid
 {
     using UnityEngine;
     using System;
@@ -137,3 +138,4 @@
         }
     }
 }
+#endif

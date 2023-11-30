@@ -1,3 +1,14 @@
+// No need for it at runtime so better makes sure it does nothing
+#if !UNITY_EDITOR
+using UnityEngine;
+namespace Bookmark4Unity.Guid
+{
+    public class GuidComponent : MonoBehaviour
+    {
+        
+    }
+}
+#else
 using UnityEditor.Experimental.SceneManagement;
 
 namespace Bookmark4Unity.Guid
@@ -177,3 +188,4 @@ namespace Bookmark4Unity.Guid
         }
     }
 }
+#endif

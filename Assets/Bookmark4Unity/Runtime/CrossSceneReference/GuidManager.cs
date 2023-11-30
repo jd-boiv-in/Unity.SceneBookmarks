@@ -1,4 +1,5 @@
-﻿namespace Bookmark4Unity.Guid
+﻿#if UNITY_EDITOR
+namespace Bookmark4Unity.Guid
 {
     using System;
     using System.Collections.Generic;
@@ -185,3 +186,4 @@
         }
     }
 }
+#endif
