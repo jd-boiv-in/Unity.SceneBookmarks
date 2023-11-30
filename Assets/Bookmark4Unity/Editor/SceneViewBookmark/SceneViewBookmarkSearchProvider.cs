@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Bookmark4Unity.Guid;
 using UnityEditor;
 using UnityEditor.Search;
@@ -15,10 +16,6 @@ namespace Bookmark4Unity.Editor
             var icon = SceneViewBookmarkManager.SceneViewBookmarkIcon;
             return new SearchProvider(id, "Bookmark4Unity: Scene View Bookmarks")
             {
-                actions =
-                {
-                    new SearchAction(id, "Move to Bookmark", null, null, HandleMoveToBookmark),
-                },
                 fetchItems = (context, items, provider) =>
                 {
                     if (int.TryParse(context.searchQuery, out var slot) && SceneViewBookmarkManager.HasBookmark(slot))
@@ -45,6 +42,15 @@ namespace Bookmark4Unity.Editor
             var slot = int.Parse(item.id);
             SceneViewBookmarkManager.MoveToBookmark(slot);
         }
+        
+        [SearchActionsProvider]
+        static IEnumerable<SearchAction> ActionHandlers()
+        {
+            return new[]
+            {
+                new SearchAction(id, "Move to Bookmark", null, null, HandleMoveToBookmark)
+            };
+        }
     }
 
     static class AssetBookmarkSearchProvider
@@ -57,10 +63,6 @@ namespace Bookmark4Unity.Editor
             var icon = SceneViewBookmarkManager.SceneViewBookmarkIcon;
             return new SearchProvider(id, "Bookmark4Unity: Asset & Scene Object Bookmarks")
             {
-                actions =
-                {
-                    new SearchAction(id, "Open Asset", null, null, HandleOpenBookmark),
-                },
                 fetchItems = (context, items, provider) =>
                 {
                     if (EditorPrefs.HasKey(Bookmark4UnityWindow.PinnedKey))
@@ -73,7 +75,8 @@ namespace Bookmark4Unity.Editor
                             var assetData = data.assets[i];
                             if (assetData.name.Contains(context.searchQuery))
                             {
-                                var icon = AssetDatabase.GetCachedIcon(assetData.path) is not Texture2D iconImage ?
+                                var iconImage = (Texture2D) AssetDatabase.GetCachedIcon(assetData.path);
+                                var icon = iconImage == null ?
                                     EditorGUIUtility.IconContent("console.warnicon").image as Texture2D :
                                     iconImage;
                                 var item = provider.CreateItem(
@@ -119,6 +122,15 @@ namespace Bookmark4Unity.Editor
                 isExplicitProvider = true,
             };
         }
+        
+        [SearchActionsProvider]
+        static IEnumerable<SearchAction> ActionHandlers()
+        {
+            return new[]
+            {
+                new SearchAction(id, "Open Asset", null, null, HandleOpenBookmark)
+            };
+        }
 
         static void HandleOpenBookmark(SearchItem item)
         {
@@ -126,7 +138,7 @@ namespace Bookmark4Unity.Editor
             {
                 // assets
                 var asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(item.description);
-                if (asset is not null)
+                if (asset != null)
                 {
                     EditorGUIUtility.PingObject(asset);
                     Selection.activeObject = asset;

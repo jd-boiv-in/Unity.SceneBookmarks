@@ -19,21 +19,21 @@
         [System.Serializable]
         public class DataWrapper
         {
-            public List<GuidData> references = new();
-            public List<SceneObjectCollection> collections = new();
-            public List<AssetData> assets = new();
-            public List<string> closedAssetTypes = new();
+            public List<GuidData> references = new List<GuidData>();
+            public List<SceneObjectCollection> collections = new List<SceneObjectCollection>();
+            public List<AssetData> assets = new List<AssetData>();
+            public List<string> closedAssetTypes = new List<string>();
             public bool isAssetTabActive;
         }
 
-        private readonly Dictionary<string, AssetBookmarkGroup> assetBookmarkGroups = new();
-        private readonly Dictionary<string, SceneObjectBookmarkGroup> sceneObjectBookmarkGroups = new();
+        private readonly Dictionary<string, AssetBookmarkGroup> assetBookmarkGroups = new Dictionary<string, AssetBookmarkGroup>();
+        private readonly Dictionary<string, SceneObjectBookmarkGroup> sceneObjectBookmarkGroups = new Dictionary<string, SceneObjectBookmarkGroup>();
 
         public const string Name = "Bookmark4Unity";
         public static string Prefix => Application.productName + "_BOOKMARK4UNITY_";
         public static string PinnedKey => Prefix + "pinned";
 
-        public bool IsAssetTabActive => assetTab is not null && assetTab.ClassListContains(currentlySelectedTabClassName);
+        public bool IsAssetTabActive => assetTab?.ClassListContains(currentlySelectedTabClassName) == true;
 
         private const string UXML_GUID_BookmarkWindow = "7789041336e00410f91f040d6e09f772";
         private const string USS_GUID_BookmarkWindow = "c2575018492804a408595d8f9445083b";
@@ -90,7 +90,7 @@
                     }
 
                     // game objects
-                    if (obj is GameObject go && go.transform is not null)
+                    if (obj is GameObject go && go.transform != null)
                     {
                         PinTransform(go.transform);
                         ActivateSceneObjTab();
@@ -285,8 +285,8 @@
                 var group = new SceneObjectBookmarkGroup(
                     reference.CachedSceneName,
                     Random.ColorHSV(0f, 1f, 0.65f, 0.65f, 1f, 1f),
-                    new() { reference },
-                    new(),
+                    new List<GuidReference>() { reference },
+                    new List<SceneObjectReferenceCollection>(),
                     bookmarkGroupUxml,
                     sceneObjBtnUxml);
                 sceneObjectBookmarkGroups[reference.CachedSceneName] = group;
@@ -320,8 +320,8 @@
                 var group = new SceneObjectBookmarkGroup(
                     scene,
                     Random.ColorHSV(0f, 1f, 0.65f, 0.65f, 1f, 1f),
-                    new(),
-                    new() { collection },
+                    new List<GuidReference>(),
+                    new List<SceneObjectReferenceCollection>() { collection },
                     bookmarkGroupUxml,
                     sceneObjBtnUxml);
                 sceneObjectBookmarkGroups[scene] = group;
@@ -353,7 +353,7 @@
                 var group = new AssetBookmarkGroup(
                     assetData.type,
                     Random.ColorHSV(0f, 1f, 0.65f, 0.65f, 1f, 1f),
-                    new() { assetData },
+                    new List<AssetData>() { assetData },
                     bookmarkGroupUxml,
                     assetBtnUxml);
                 assetBookmarkGroups[assetData.type] = group;
@@ -396,7 +396,7 @@
                     var group = new AssetBookmarkGroup(
                         asset.type,
                         Random.ColorHSV(0f, 1f, 0.65f, 0.65f, 1f, 1f),
-                        new() { asset },
+                        new List<AssetData>() { asset },
                         bookmarkGroupUxml,
                         assetBtnUxml);
                     assetBookmarkGroups[asset.type] = group;
@@ -416,8 +416,8 @@
                     var group = new SceneObjectBookmarkGroup(
                         reference.cachedScene,
                         Random.ColorHSV(0f, 1f, 0.65f, 0.65f, 1f, 1f),
-                        new() { new GuidReference(reference) },
-                        new(),
+                        new List<GuidReference>() { new GuidReference(reference) },
+                        new List<SceneObjectReferenceCollection>(),
                         bookmarkGroupUxml,
                         sceneObjBtnUxml);
                     sceneObjectBookmarkGroups[reference.cachedScene] = group;
@@ -437,8 +437,8 @@
                     var group = new SceneObjectBookmarkGroup(
                         collection.scene,
                         Random.ColorHSV(0f, 1f, 0.65f, 0.65f, 1f, 1f),
-                        new(),
-                        new() { new SceneObjectReferenceCollection(collection) },
+                        new List<GuidReference>(),
+                        new List<SceneObjectReferenceCollection>() { new SceneObjectReferenceCollection(collection) },
                         bookmarkGroupUxml,
                         sceneObjBtnUxml);
                     sceneObjectBookmarkGroups[collection.scene] = group;

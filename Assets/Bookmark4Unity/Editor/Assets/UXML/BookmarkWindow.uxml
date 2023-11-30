@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <Style src="project://database/Assets/Bookmark4Unity/Editor/Assets/UXML/BookmarkWindow.uss?fileID=7433441132597879392&amp;guid=c2575018492804a408595d8f9445083b&amp;type=3#BookmarkWindow" />
+    <Style src="./BookmarkWindow.uss?fileID=7433441132597879392&amp;guid=c2575018492804a408595d8f9445083b&amp;type=3#BookmarkWindow" />
     <ui:VisualElement name="Menu" style="flex-direction: row;">
         <ui:Button text="↓" display-tooltip-when-elided="true" name="SortBtnDesc" tooltip="Sort bookmarks in descending order" style="height: auto; width: 15px; background-color: rgba(88, 88, 88, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; -unity-font-style: bold;" />
         <ui:Button text="↑" display-tooltip-when-elided="true" name="SortBtnAsc" tooltip="Sort bookmarks in ascending order" style="height: auto; width: 15px; background-color: rgba(88, 88, 88, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; -unity-font-style: bold;" />

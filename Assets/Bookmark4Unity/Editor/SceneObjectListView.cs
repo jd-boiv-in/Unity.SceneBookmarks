@@ -15,15 +15,15 @@ namespace Bookmark4Unity.Editor
         public ListView DataListView { get; private set; }
         public const int ItemHeight = 15;
         public bool IsEmpty => Data.Count < 1;
-        public Dictionary<int, EventCallback<ClickEvent>> pingActions = new();
-        public Dictionary<int, EventCallback<ClickEvent>> focusActions = new();
-        public Dictionary<int, EventCallback<ClickEvent>> delActions = new();
-        public Dictionary<int, EventCallback<PointerLeaveEvent>> dragActions = new();
+        public Dictionary<int, EventCallback<ClickEvent>> pingActions = new Dictionary<int, EventCallback<ClickEvent>>();
+        public Dictionary<int, EventCallback<ClickEvent>> focusActions = new Dictionary<int, EventCallback<ClickEvent>>();
+        public Dictionary<int, EventCallback<ClickEvent>> delActions = new Dictionary<int, EventCallback<ClickEvent>>();
+        public Dictionary<int, EventCallback<PointerLeaveEvent>> dragActions = new Dictionary<int, EventCallback<PointerLeaveEvent>>();
 
         public SceneObjectListView(List<GuidReference> data, VisualTreeAsset btnAsset)
         {
             Data = data;
-            DataListView = new(Data, ItemHeight, () =>
+            DataListView = new ListView(Data, ItemHeight, () =>
             {
                 return btnAsset.Instantiate();
             },
@@ -79,7 +79,7 @@ namespace Bookmark4Unity.Editor
         {
             if (Data.Contains(data)) return false;
             Data.Add(data);
-            DataListView.Rebuild();
+            DataListView.Refresh();
             ChangeEvent?.Invoke();
             DataListView.style.display = DisplayStyle.Flex;
             return true;
@@ -124,7 +124,7 @@ namespace Bookmark4Unity.Editor
             // }
 
             Data.RemoveAt(index);
-            DataListView.Rebuild();
+            DataListView.Refresh();
             ChangeEvent?.Invoke();
             if (IsEmpty) DataListView.style.display = DisplayStyle.None;
             Bookmark4UnityWindow.UpdateSavedData();
@@ -141,7 +141,7 @@ namespace Bookmark4Unity.Editor
             // }
 
             Data.Clear();
-            DataListView.Rebuild();
+            DataListView.Refresh();
             DataListView.style.display = DisplayStyle.None;
         }
 
@@ -157,13 +157,13 @@ namespace Bookmark4Unity.Editor
         public void SortDesc()
         {
             Data.Sort((a, b) => a.CachedName.CompareTo(b.CachedName));
-            DataListView.RefreshItems();
+            DataListView.Refresh();
         }
 
         public void SortAsc()
         {
             Data.Sort((a, b) => b.CachedName.CompareTo(a.CachedName));
-            DataListView.RefreshItems();
+            DataListView.Refresh();
         }
 
         public IEnumerable<GuidData> ToData()

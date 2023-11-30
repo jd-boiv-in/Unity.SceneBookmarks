@@ -14,8 +14,8 @@
         SerializedProperty nameProp;
 
         // cache off GUI content to avoid creating garbage every frame in editor
-        readonly GUIContent sceneLabel = new("Containing Scene", "The target object is expected in this scene asset.");
-        readonly GUIContent clearButtonGUI = new("Clear", "Remove Cross Scene Reference");
+        readonly GUIContent sceneLabel = new GUIContent("Containing Scene", "The target object is expected in this scene asset.");
+        readonly GUIContent clearButtonGUI = new GUIContent("Clear", "Remove Cross Scene Reference");
 
         // add an extra line to display source scene for targets
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

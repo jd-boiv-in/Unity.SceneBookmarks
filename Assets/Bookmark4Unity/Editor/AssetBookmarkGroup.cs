@@ -13,10 +13,10 @@ namespace Bookmark4Unity.Editor
         public ListView DataListView { get; private set; }
         public const int ItemHeight = 15;
         public bool IsEmpty => Data.Count < 1;
-        public Dictionary<int, EventCallback<ClickEvent>> pingActions = new();
-        public Dictionary<int, EventCallback<ClickEvent>> openActions = new();
-        public Dictionary<int, EventCallback<ClickEvent>> delActions = new();
-        public Dictionary<int, EventCallback<PointerLeaveEvent>> dragActions = new();
+        public Dictionary<int, EventCallback<ClickEvent>> pingActions = new Dictionary<int, EventCallback<ClickEvent>>();
+        public Dictionary<int, EventCallback<ClickEvent>> openActions = new Dictionary<int, EventCallback<ClickEvent>>();
+        public Dictionary<int, EventCallback<ClickEvent>> delActions = new Dictionary<int, EventCallback<ClickEvent>>();
+        public Dictionary<int, EventCallback<PointerLeaveEvent>> dragActions = new Dictionary<int, EventCallback<PointerLeaveEvent>>();
 
 
         public AssetBookmarkGroup(string groupName, Color borderColor, List<AssetData> data, VisualTreeAsset groupAsset, VisualTreeAsset btnAsset)
@@ -30,7 +30,7 @@ namespace Bookmark4Unity.Editor
             Root.text = groupName;
             Data = data;
 
-            DataListView = new(Data, ItemHeight, () =>
+            DataListView = new ListView(Data, ItemHeight, () =>
             {
                 return btnAsset.Instantiate();
             },
@@ -43,8 +43,9 @@ namespace Bookmark4Unity.Editor
                 var data = Data[i];
                 var index = i; // save value for lambda functions
 
+                var iconImage = (Texture2D) AssetDatabase.GetCachedIcon(data.path);
                 icon.style.backgroundImage = Background.FromTexture2D(
-                    AssetDatabase.GetCachedIcon(data.path) is not Texture2D iconImage ?
+                    iconImage == null ?
                     EditorGUIUtility.IconContent("console.warnicon").image as Texture2D :
                     iconImage);
                 del.style.backgroundImage = Background.FromTexture2D(SceneViewBookmarkManager.SceneViewEmptyIcon);
@@ -86,7 +87,7 @@ namespace Bookmark4Unity.Editor
         {
             if (Data.Contains(data)) return false;
             Data.Add(data);
-            DataListView.Rebuild();
+            DataListView.Refresh();
             Element.RemoveFromClassList(Bookmark4UnityWindow.HiddenContentClassName);
             return true;
         }
@@ -129,7 +130,7 @@ namespace Bookmark4Unity.Editor
         public void Remove(int index)
         {
             Data.RemoveAt(index);
-            DataListView.Rebuild();
+            DataListView.Refresh();
             if (IsEmpty) Element.AddToClassList(Bookmark4UnityWindow.HiddenContentClassName);
             Bookmark4UnityWindow.UpdateSavedData();
         }
@@ -137,7 +138,7 @@ namespace Bookmark4Unity.Editor
         public void RemoveAll()
         {
             Data.Clear();
-            DataListView.Rebuild();
+            DataListView.Refresh();
             Element.AddToClassList(Bookmark4UnityWindow.HiddenContentClassName);
             Bookmark4UnityWindow.UpdateSavedData();
         }
@@ -156,13 +157,13 @@ namespace Bookmark4Unity.Editor
         public void SortDesc()
         {
             Data.Sort((a, b) => a.name.CompareTo(b.name));
-            DataListView.RefreshItems();
+            DataListView.Refresh();
         }
 
         public void SortAsc()
         {
             Data.Sort((a, b) => b.name.CompareTo(a.name));
-            DataListView.RefreshItems();
+            DataListView.Refresh();
         }
     }
 }

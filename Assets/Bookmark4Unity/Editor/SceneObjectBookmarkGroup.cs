@@ -64,8 +64,8 @@ namespace Bookmark4Unity.Editor
 
         public void Refresh()
         {
-            SceneObjListView.DataListView.RefreshItems();
-            SceneObjCollectionListView.DataListView.RefreshItems();
+            SceneObjListView.DataListView.Refresh();
+            SceneObjCollectionListView.DataListView.Refresh();
         }
 
         private void OnListViewChange()
