@@ -1,4 +1,6 @@
-﻿namespace Bookmark4Unity.Guid.Editor
+﻿using UnityEditor.Experimental.SceneManagement;
+
+namespace Bookmark4Unity.Guid.Editor
 {
     using UnityEditor;
     using UnityEngine;
