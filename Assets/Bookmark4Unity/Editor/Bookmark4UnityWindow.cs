@@ -30,8 +30,8 @@
         [System.Serializable]
         public class DataWrapper
         {
-            public List<GuidData> references = new();
-            public List<AssetData> assets = new();
+            public List<GuidData> references = new List<GuidData>();
+            public List<AssetData> assets = new List<AssetData>();
         }
 
         [System.Serializable]
