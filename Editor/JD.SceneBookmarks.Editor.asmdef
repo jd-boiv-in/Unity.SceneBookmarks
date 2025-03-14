@@ -1,5 +1,5 @@
 {
-    "name": "Bookmark4Unity.Test.Editor",
+    "name": "JD.SceneBookmarks.Editor",
     "rootNamespace": "",
     "references": [
         "GUID:a591c01d91f06442b9d1f032d3a4a414"
