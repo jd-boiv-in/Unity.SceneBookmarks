@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace Bookmark4Unity.Editor
 {
-    [Overlay(typeof(SceneView), "Bookmark4Unity")]
+    [Overlay(typeof(SceneView), "Scene Bookmarks")]
     class SceneViewBookmarkToolbarOverlay : ToolbarOverlay
     {
         SceneViewBookmarkToolbarOverlay() : base(SceneViewBookmarkToggle.id) { }
@@ -25,7 +25,7 @@ namespace Bookmark4Unity.Editor
         {
             dropdownClicked += ShowMenu;
             this.RegisterValueChangedCallback(OnValueChanged);
-            text = "Cameras";
+            text = "";
             icon = SceneViewBookmarkManager.SceneViewBookmarkIcon;
             tooltip = "Bookmark the scene view camera.";
             SetValueWithoutNotify(SceneViewBookmarkManager.IsOverlayVisible = EditorPrefs.GetBool(EnabledByDefault, true));

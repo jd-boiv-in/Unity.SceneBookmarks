@@ -8,7 +8,7 @@ using Scene = UnityEngine.SceneManagement.Scene;
 
 namespace Bookmark4Unity.Editor
 {
-    [Overlay(typeof(SceneView), "Scene View Camera Bookmarks")]
+    [Overlay(typeof(SceneView), "Scene Bookmarks")]
     public class SceneViewBookmarkOverlay : Overlay, ITransientOverlay
     {
         public bool visible => SceneViewBookmarkManager.IsOverlayVisible;
