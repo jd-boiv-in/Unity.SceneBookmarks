@@ -19,17 +19,21 @@ namespace Bookmark4Unity.Editor
     {
         public const string id = "SceneViewBookmarkToolbarToggle";
 
+        public const string EnabledByDefault = "EnabledByDefault";
+        
         public SceneViewBookmarkToggle()
         {
             dropdownClicked += ShowMenu;
             this.RegisterValueChangedCallback(OnValueChanged);
-            text = "Toggle";
+            text = "Cameras";
             icon = SceneViewBookmarkManager.SceneViewBookmarkIcon;
             tooltip = "Bookmark the scene view camera.";
+            SetValueWithoutNotify(SceneViewBookmarkManager.IsOverlayVisible = EditorPrefs.GetBool(EnabledByDefault, true));
         }
 
         private void OnValueChanged(ChangeEvent<bool> evt)
         {
+            EditorPrefs.SetBool(EnabledByDefault, evt.newValue);
             SceneViewBookmarkManager.IsOverlayVisible = evt.newValue;
         }
 
