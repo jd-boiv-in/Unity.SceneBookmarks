@@ -26,7 +26,7 @@ Add the dependency to your `manifest.json`
 
 ### Bookmarking scene view camera positions
 
-![](Images/scene_view_demo.gif)
+![](Documentation~/scene_view_demo.gif)
 
 - Enable the overlay
   - Press `space`(for 〜Unity2021.3)/`｀`(for Unity2022.3〜) inside the scene view to bring up overlay visibility menu, and turn `Bookmark4Unity` on
