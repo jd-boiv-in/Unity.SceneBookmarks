@@ -16,7 +16,7 @@ namespace Bookmark4Unity.Editor
         private const string UXML_GUID = "0a5cb4dbb8d6b4b8b9aabfe0f499af04";
         private const string BTN_UXML_GUID = "4598592c7ca0248ea97b3bdb91dd66c1";
         private Color SAVE_BTN_COLOR = new(0.25f, 0.25f, 0.25f, 1f);
-        private Color PREV_BTN_COLOR = new(0.45f, 0f, 0f, 1f);
+        private Color PREV_BTN_COLOR = new(0.10f, 0.10f, 0.10f, 1f);
         private new VisualElement rootVisualElement;
         private readonly Button[] moveToBtns = new Button[SceneViewBookmarkManager.maxBookmarkCount + 1];
         private readonly Button[] saveToBtns = new Button[SceneViewBookmarkManager.maxBookmarkCount + 1];
@@ -76,15 +76,14 @@ namespace Bookmark4Unity.Editor
                     saveToBtns[i].text = $"<b>PREV</b>";
                     saveToBtns[i].tooltip = $"Return to previous view";
                     saveToBtns[i].style.backgroundColor = PREV_BTN_COLOR;
-                    saveToBtns[i].style.color = Color.yellow;
+                    saveToBtns[i].style.color = new Color(0.9f, 0.9f, 0.9f, 1f);
                     saveToBtns[i].clicked += () =>
                     {
                         if (!SceneViewBookmarkManager.HasBookmark(index)) return;
                         SceneViewBookmarkManager.MoveToBookmark(index);
                     };
                 }
-
-
+                
                 scroll.Add(btn);
             }
 
