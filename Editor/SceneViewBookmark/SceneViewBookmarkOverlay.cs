@@ -17,7 +17,7 @@ namespace Bookmark4Unity.Editor
         private const string BTN_UXML_GUID = "4598592c7ca0248ea97b3bdb91dd66c1";
         private Color SAVE_BTN_COLOR = new(0.25f, 0.25f, 0.25f, 1f);
         private Color PREV_BTN_COLOR = new(0.45f, 0f, 0f, 1f);
-        private VisualElement rootVisualElement;
+        private new VisualElement rootVisualElement;
         private readonly Button[] moveToBtns = new Button[SceneViewBookmarkManager.maxBookmarkCount + 1];
         private readonly Button[] saveToBtns = new Button[SceneViewBookmarkManager.maxBookmarkCount + 1];
         private int prevIndex;
